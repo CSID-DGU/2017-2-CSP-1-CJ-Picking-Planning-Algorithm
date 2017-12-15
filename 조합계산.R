@@ -1,0 +1,16 @@
+install.packages("readxl")
+library(readxl)
+library(arules)
+test=read_excel("C:/Users/qkqhr/유니/동국대/융프/7월/7월.xlsx",sheet="Sheet1")
+test.list=split(test$SKU_NM,test$SEQ)
+test.list=sapply(test.list,unique)
+test.tran=as(test.list,"transactions")
+summary(test.tran)
+test.rules=apriori(data=test.tran, parameter=list(support=0.5))
+summary(test.rules)
+inspect(test.rules)
+a=inspect(test.rules)
+a=a[,-2]
+
+getwd()
+write.csv(a, "test.csv")
